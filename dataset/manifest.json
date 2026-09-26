@@ -1,0 +1,93 @@
+{
+  "groups": {
+    "data_reading": {
+      "cases": 120,
+      "difficulty": {
+        "hard": 40,
+        "standard": 80
+      },
+      "subgroups": {
+        "hard_compute": 25,
+        "hard_unavailable": 15,
+        "number": 44,
+        "text": 12,
+        "unavailable": 24
+      }
+    },
+    "diagnosis": {
+      "cases": 120,
+      "difficulty": {
+        "hard": 40,
+        "standard": 80
+      },
+      "subgroups": {
+        "decoy": 12,
+        "hard_boundary": 8,
+        "hard_domain_match": 8,
+        "hard_mixed_keywords": 8,
+        "hard_not_ranking": 8,
+        "hard_spike_with_losses": 8,
+        "multi_cause": 16,
+        "not_significant": 16,
+        "single_cause": 20,
+        "unexplained": 16
+      }
+    },
+    "sql": {
+      "cases": 120,
+      "difficulty": {
+        "hard": 40,
+        "standard": 80
+      },
+      "subgroups": {
+        "bounce_rate": 7,
+        "custom_events": 7,
+        "daily_page": 7,
+        "entry_duration": 7,
+        "hard_biggest_increase": 6,
+        "hard_bounce_by_channel": 5,
+        "hard_median_duration": 5,
+        "hard_multi_day_users": 6,
+        "hard_pricing_then_signup": 6,
+        "hard_signup_rate_by_device": 6,
+        "hard_views_by_entry": 6,
+        "page_views": 7,
+        "returning_by_device": 6,
+        "search_share": 7,
+        "top_countries": 7,
+        "top_exit": 4,
+        "top_pages": 7,
+        "unique_visitors": 7,
+        "utm_sessions": 7
+      }
+    },
+    "tool_choice": {
+      "cases": 120,
+      "difficulty": {
+        "hard": 40,
+        "standard": 80
+      },
+      "subgroups": {
+        "direct": 58,
+        "hard_distractor": 2,
+        "hard_multi_arg": 15,
+        "hard_no_tool": 8,
+        "hard_relative_dates": 10,
+        "hard_site_by_name": 5,
+        "near_miss": 17,
+        "no_tool": 5
+      }
+    }
+  },
+  "seeds": {
+    "data_reading": 13,
+    "diagnosis": 7,
+    "sql": 19,
+    "sql_tables": 17,
+    "tool_choice": 11
+  },
+  "tables": {
+    "events": 5940,
+    "sessions": 2494
+  }
+}

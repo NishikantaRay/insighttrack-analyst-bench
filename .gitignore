@@ -1,0 +1,12 @@
+.venv/
+.env
+kaggle.json
+__pycache__/
+*.pyc
+runs/
+*.task.json
+*.run.json
+.pytest_cache/
+example_task.py
+kaggle_benchmarks_reference.md
+.DS_Store

@@ -1,0 +1,468 @@
+[
+  {
+    "name": "get_kpi",
+    "description": "Get headline KPIs for a site over a time range: total visitors, pageviews, bounce rate, average session duration, plus trends vs. the previous period. Use for \"how is my site doing\" / overview questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_traffic",
+    "description": "Get visitors and sessions over time (a time-series) for charting traffic trends. Use for \"show my traffic\", \"is traffic up or down\", trend questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_top_pages",
+    "description": "Get the most-visited pages (URL, views, unique visitors, % of total) for a time range. Use for \"top pages\", \"most popular content\", \"which pages get traffic\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "How many pages (default 10)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_sources",
+    "description": "Get the traffic source breakdown (direct, search, social, referral, email…) for a time range. Use for \"where does my traffic come from\", \"traffic channels\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_devices",
+    "description": "Get the device-type breakdown (desktop / mobile / tablet) for a time range. Use for \"what devices do visitors use\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_countries",
+    "description": "Get the top countries by visitors for a time range. Use for \"where are my visitors from\", geography questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "How many countries (default 10)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_funnel",
+    "description": "Get the conversion funnel with per-step drop-off for a time range. Use for \"conversion rate\", \"where are users dropping off\", funnel questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_realtime",
+    "description": "Get live/real-time visitors right now: active visitor count and active pages. Use for \"who is on my site now\", \"live visitors\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_acquisition_utm",
+    "description": "Get UTM campaign performance (source/medium/campaign with visitors and pageviews) for a time range. Use for \"how are my campaigns doing\", UTM / ad questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_engagement",
+    "description": "Get engagement metrics for a time range: scroll depth milestones, rage clicks, and time-on-page. Use for \"how engaged are visitors\", \"are people reading my content\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "compare_ranges",
+    "description": "Compare traffic in the current period vs. the previous period of the same length. Use for \"how does this week compare to last week\", period-over-period questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "list_sites",
+    "description": "List the websites this user has access to (id, name, domain, their role). Site-independent — call it FIRST when the user asks about a specific site by name, to resolve which siteId to query, or for \"which sites do I have\", \"all my sites\" questions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    },
+    "siteless": true
+  },
+  {
+    "name": "get_goals",
+    "description": "Get conversion goals and their performance (conversions, conversion rate vs. total visitors) for a time range. Use for \"goals\", \"conversions\", \"conversion rate\", \"how are my goals doing\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_user_flow",
+    "description": "Get how visitors navigate the site: page-to-page transitions, top entry pages, and top exit pages for a time range. Use for \"user flow\", \"navigation paths\", \"where do visitors go / drop off\", \"entry and exit pages\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_js_errors",
+    "description": "Get JavaScript errors captured on the site (message, source file, page, occurrences, affected users) for a time range. Use for \"errors\", \"js errors\", \"what is breaking\", \"are there any errors\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How many errors (default 30)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_performance",
+    "description": "Get Core Web Vitals (LCP, CLS, INP, FCP, TTFB) with average and p75 values for a time range. Use for \"performance\", \"web vitals\", \"how fast is my site\", \"LCP / CLS / page speed\".",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_page_detail",
+    "description": "Get click detail for ONE specific page path: which elements visitors click most (text, selector, clicks, unique users). Use for \"what do visitors click on /pricing\", \"clicks on a page\", page-level drilldowns. Requires a `path` (e.g. \"/pricing\").",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        },
+        "path": {
+          "type": "string",
+          "description": "The page path to inspect, e.g. \"/pricing\". Defaults to \"/\"."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How many click targets (default 30)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_error_summary",
+    "description": "Get a summary of the site's Sentry errors for a time range: unresolved issue count, regressions, total error events, users affected, and a severity breakdown. Use for \"how many errors\", \"is the site healthy\", \"any regressions\", \"what's breaking\" overview questions. Empty if the site hasn't connected Sentry.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_error_issues",
+    "description": "Get the site's Sentry error issues for a time range: title, level, status, event count, users affected, whether it regressed, the release it was last seen in, and first/last seen. Use for \"what errors do I have\", \"top errors\", \"recent crashes\", \"what broke after the last deploy\". Empty if the site hasn't connected Sentry.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "type": "string",
+          "description": "Time window. One of 'today', '7d', '30d', '90d', or a custom range as 'custom:YYYY-MM-DD:YYYY-MM-DD'. Defaults to '30d'."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How many issues (default 25)."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_rankings",
+    "description": "Get the current Google organic search position for a domain on a given keyword, plus the top ~10 competing URLs. Live SERP data from SerpApi, cached to conserve credits. Use for 'where do I rank for X', 'who outranks me', 'did my position change'. If `domain` is omitted it defaults to the current site's own domain.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "The search query to check, e.g. 'free email templates'."
+        },
+        "domain": {
+          "type": "string",
+          "maxLength": 253,
+          "description": "Domain to locate in the results, e.g. 'example.com'. Defaults to the current site's domain."
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Geographic location for the search, e.g. 'United States'. Defaults to 'United States'."
+        },
+        "device": {
+          "type": "string",
+          "enum": [
+            "desktop",
+            "mobile"
+          ],
+          "description": "Which SERP to fetch. Defaults to 'desktop'."
+        },
+        "maxAgeHours": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 168,
+          "description": "Accept a cached SERP snapshot up to this many hours old before spending a SerpApi credit. Defaults to 24."
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_ai_overview_citations",
+    "description": "Check whether Google shows an AI Overview for a keyword and, if so, which domains and URLs it cites. Use for 'does an AI Overview appear for X', 'am I cited in the AI answer', 'who does Google's AI cite instead of me'. An AI Overview that cites competitors but not you is a common cause of clicks falling while rank holds steady.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "The search query to check."
+        },
+        "domain": {
+          "type": "string",
+          "maxLength": 253,
+          "description": "Domain to check for citation. Defaults to the current site's domain."
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Geographic location for the search, e.g. 'United States'. Defaults to 'United States'."
+        },
+        "maxAgeHours": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 168,
+          "description": "Accept a cached SERP snapshot up to this many hours old before spending a SerpApi credit. Defaults to 24."
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_related_queries",
+    "description": "Get keyword-expansion ideas for a search term: Google's 'People also ask' questions and its related searches. Use for 'what else are people searching', 'keyword ideas for X', 'what questions should this page answer'. Useful after a traffic drop to find queries a competitor may now be capturing.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "The seed search query to expand."
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Geographic location for the search, e.g. 'United States'. Defaults to 'United States'."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Maximum items per group. Defaults to 10."
+        },
+        "maxAgeHours": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 168,
+          "description": "Accept a cached SERP snapshot up to this many hours old before spending a SerpApi credit. Defaults to 72."
+        }
+      },
+      "required": [
+        "keyword"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "explain_traffic_change",
+    "description": "Explain WHY traffic to a specific page went up or down, by joining InsightTrack's first-party traffic trend with live Google SERP data. Detects the week-over-week change, then checks that page's target keywords for rank movement and AI Overview citation changes, and returns a plain-English explanation with supporting evidence. Use for 'why did traffic to /page drop', 'what happened to this page', 'explain the drop last week'. This is the tool to reach for whenever the user asks WHY traffic changed — get_top_pages alone cannot answer that.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "description": "The page path to explain, e.g. '/guides/email-templates'."
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "maxItems": 5,
+          "description": "Target keywords for this page. If omitted, uses the keywords mapped to this page in InsightTrack."
+        },
+        "dateRange": {
+          "type": "string",
+          "description": "Traffic window to analyse. Defaults to '90d' — short windows give unreliable page-level data, so prefer the default."
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Geographic location for the search, e.g. 'United States'. Defaults to 'United States'."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  }
+]
