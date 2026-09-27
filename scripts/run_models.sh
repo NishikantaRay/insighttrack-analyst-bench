@@ -16,7 +16,7 @@ cd "$(dirname "$0")/.."
 cost_for() {
   case "$1" in
     claude-sonnet-5-default)        echo 0.90 ;;
-    gpt-5.5-2026-04-23)             echo 2.60 ;;  # ~$0.64/task measured + up to $2 reserved (4 calls x $0.50)
+    gpt-5.5-2026-04-23)             echo 3.50 ;;  # ~$0.95/task measured + $2 reserved (4 x $0.50); $2.87 still hit quota on 9 cases
     gemini-3.7-flash)               echo 0.60 ;;
     grok-4.20-0309-reasoning)       echo 0.60 ;;
     claude-haiku-4-5-20251001)      echo 0.60 ;;
