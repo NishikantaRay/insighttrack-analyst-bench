@@ -1,5 +1,5 @@
 ---
-title: "\"Nothing Happened,\" Said the AI. Traffic Was Down 47%."
+title: My Kaggle Benchmark Caught AI Models Inventing Reasons
 published: false
 tags: devchallenge, kagglechallenge, ai, machinelearning
 ---
