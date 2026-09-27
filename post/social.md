@@ -27,7 +27,7 @@ Leaderboard: https://www.kaggle.com/benchmarks/nishikantaray/insighttrack-analys
 
 ---
 
-## LinkedIn: explainer post (image: `post/social/explainer.png`)
+## LinkedIn: explainer post (image: `post/social/explainer-light.png`; dark version: `explainer.png`)
 
 InsightTrack × Kaggle × DEV: my hackathon project in one picture. 👇
 
@@ -142,7 +142,7 @@ All in `post/social/`. Regenerate with `python scripts/make_social.py`.
 
 | Post | Image |
 |---|---|
-| LinkedIn explainer post | `explainer.png` |
+| LinkedIn explainer post | `explainer-light.png` (light, real logos), or `explainer.png` (dark) |
 | LinkedIn (first post above) | `carousel-linkedin.pdf`: upload as a **document** so it shows as a swipeable carousel. Or `landscape.png` for a single image |
 | X / Twitter thread | Tweet 1: `landscape.png` · tweet 3: `carousel-03.png` · tweet 4: `carousel-04.png` · tweet 5: `carousel-05.png` · tweet 7: `carousel-06.png` |
 | X single post | `square.png` |
