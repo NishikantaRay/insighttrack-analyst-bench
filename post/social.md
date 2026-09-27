@@ -148,4 +148,5 @@ All in `post/social/`. Regenerate with `python scripts/make_social.py`.
 | X single post | `square.png` |
 | Instagram feed | `carousel-01.png` … `carousel-07.png` as one carousel post |
 | Instagram / LinkedIn story | `story.png` (add a link sticker to the DEV post) |
-| DEV post cover | `../../assets/cover.png` |
+| DEV post cover | `cover-light-dev.png` (1600×672, DEV's cover shape). Also at `post/cover-dev.png` |
+| Kaggle benchmark / dataset cover | `cover-light.png` (1600×800) |

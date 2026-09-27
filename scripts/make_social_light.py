@@ -192,5 +192,83 @@ def explainer_light():
     p.save("explainer-light.png")
 
 
+def small_logo_row(p, x, y, h=34):
+    """Left-aligned  InsightTrack × kaggle × DEV  (for covers)."""
+    it = logo("insighttrack.png", h)
+    kg = logo("kaggle-wordmark.png", int(h * 0.9))
+    dv = logo("dev-badge.png", int(h * 0.86))
+    nf, xf = f(BOLD, h * 0.62), f(MEDIUM, h * 0.6)
+    mid = y + h / 2
+    p.paste(it, x, y)
+    x += it.width / S + 10
+    p.text((x, mid), "InsightTrack", nf, INK, anchor="lm")
+    x += p.width("InsightTrack", nf) + 18
+    for im, dy in ((kg, h * 0.05), (dv, h * 0.07)):
+        p.text((x, mid), "×", xf, INK3, anchor="lm")
+        x += p.width("×", xf) + 18
+        p.paste(im, x, y + dy)
+        x += im.width / S + 18
+
+
+def drop_chart(p, box):
+    """A page's weekly traffic, flat then a sharp drop, with the AI's verdict."""
+    x0, y0, x1, y1 = box
+    p.card(box, radius=22)
+    pad = 36
+    p.text((x0 + pad, y0 + 30), "Weekly pageviews", f(DEMI, 20), INK2)
+    cx0, cy0, cx1, cy1 = x0 + pad, y0 + 80, x1 - pad, y1 - 40
+    for i in range(4):
+        gy = cy0 + (cy1 - cy0) * i / 3
+        p.d.line([(cx0 * S, gy * S), (cx1 * S, gy * S)], fill=TRACK, width=2 * S)
+    vals = [0.72, 0.70, 0.75, 0.71, 0.74, 0.69, 0.73, 0.38]
+    n = len(vals)
+    pts = [(cx0 + (cx1 - cx0) * i / (n - 1), cy1 - (cy1 - cy0) * v) for i, v in enumerate(vals)]
+    area = [(x * S, y * S) for x, y in pts] + [(cx1 * S, cy1 * S), (cx0 * S, cy1 * S)]
+    p.d.polygon(area, fill=INDIGO_50)
+    p.d.line([(x * S, y * S) for x, y in pts[:-1]], fill=INDIGO, width=5 * S, joint="curve")
+    p.d.line([(x * S, y * S) for x, y in pts[-2:]], fill=AMBER, width=5 * S)
+    for x, y in pts[:-1]:
+        p.d.ellipse([(x - 6) * S, (y - 6) * S, (x + 6) * S, (y + 6) * S], fill=INDIGO)
+    lx, ly = pts[-1]
+    p.d.ellipse([(lx - 10) * S, (ly - 10) * S, (lx + 10) * S, (ly + 10) * S], fill=AMBER)
+    # Label to the left of the falling segment, clear of the line.
+    (px, py) = pts[-2]
+    p.text(((px + lx) / 2 - 34, (py + ly) / 2 + 6), "−47%", f(BOLD, 30), AMBER, anchor="rm")
+    # The AI's verdict, as a speech bubble.
+    bw, bh = 280, 64
+    bx1, by0 = cx1, ly + 34
+    p.rect((bx1 - bw, by0, bx1, by0 + bh), INK, radius=16)
+    p.d.polygon([((bx1 - 40) * S, by0 * S), ((bx1 - 22) * S, (by0 - 14) * S), ((bx1 - 10) * S, by0 * S)], fill=INK)
+    p.text((bx1 - bw / 2, by0 + bh / 2), "AI: \"not significant\"", f(DEMI, 22), (255, 255, 255), anchor="mm")
+
+
+def cover_light(w, h, name):
+    """Post / benchmark cover. Title matches the DEV post."""
+    p = Page(w, h)
+    m = 72
+    small_logo_row(p, m, 64 if h < 750 else 80)
+    ty = 150 if h < 750 else 190
+    p.text((m, ty), "KAGGLE BENCHMARK", f(BOLD, 20), INDIGO)
+    lines = ["My Kaggle Benchmark", "Caught AI Models", "Inventing Reasons"]
+    for i, line in enumerate(lines):
+        p.text((m, ty + 38 + i * 72), line, f(BOLD, 64), INK)
+    sy = ty + 38 + len(lines) * 72 + 18
+    p.text((m, sy), "8 LLMs · 480 questions · graded by the product's own code", f(MEDIUM, 24), INK2)
+    # Three headline results, so the cover alone tells the story.
+    stats = [("100%", "top models", INDIGO), ("20–49%", "cheaper models", AMBER), ("35%", "reasoning off", INK)]
+    stat_y = sy + (64 if h < 750 else 90)
+    x = m
+    for big, small, color in stats:
+        p.text((x, stat_y), big, f(BOLD, 40), color)
+        p.text((x, stat_y + 50), small, f(MEDIUM, 19), INK2)
+        x += max(p.width(big, f(BOLD, 40)), p.width(small, f(MEDIUM, 19))) + 56
+    p.text((m, stat_y + 82), "on \"why did this page's traffic change?\"", f(MEDIUM, 17), INK3)
+    chart_top = 88 if h < 750 else 120
+    drop_chart(p, (w * 0.56, chart_top, w - m, h - (70 if h < 750 else 110)))
+    p.save(name)
+
+
 if __name__ == "__main__":
     explainer_light()
+    cover_light(1600, 672, "cover-light-dev.png")    # DEV crops covers to 1000:420
+    cover_light(1600, 800, "cover-light.png")        # Kaggle benchmark / dataset (2:1)
