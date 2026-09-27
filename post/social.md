@@ -106,3 +106,18 @@ Built for the DEV × Kaggle Benchmarking Challenge. Link in bio.
 - "The cheapest model saw traffic fall 47% and said 'not significant'."
 - "Same model. Reasoning on: 100%. Reasoning off: 35%."
 - "My AI benchmark's best bug was in my own prompt."
+
+---
+
+## Which image goes with which post
+
+All in `post/social/`. Regenerate with `python scripts/make_social.py`.
+
+| Post | Image |
+|---|---|
+| LinkedIn (text above) | `carousel-linkedin.pdf`: upload as a **document** so it shows as a swipeable carousel. Or `landscape.png` for a single image |
+| X / Twitter thread | Tweet 1: `landscape.png` · tweet 3: `carousel-03.png` · tweet 4: `carousel-04.png` · tweet 5: `carousel-05.png` · tweet 7: `carousel-06.png` |
+| X single post | `square.png` |
+| Instagram feed | `carousel-01.png` … `carousel-07.png` as one carousel post |
+| Instagram / LinkedIn story | `story.png` (add a link sticker to the DEV post) |
+| DEV post cover | `../../assets/cover.png` |
