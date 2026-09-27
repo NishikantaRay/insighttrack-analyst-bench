@@ -27,6 +27,33 @@ Leaderboard: https://www.kaggle.com/benchmarks/nishikantaray/insighttrack-analys
 
 ---
 
+## LinkedIn: explainer post (image: `post/social/explainer.png`)
+
+InsightTrack × Kaggle × DEV: my hackathon project in one picture. 👇
+
+I build InsightTrack, an open-source web analytics app. Its AI analyst, Pulse, answers questions like "why did traffic to /pricing drop?"
+
+Pulse needs a model behind it, so I made the choice a hackathon project.
+
+① I turned Pulse's real job into 480 test questions.
+② Every answer is checked by InsightTrack's own code. No AI grades AI.
+③ Kaggle ran 8 models on the same questions.
+④ I wrote up what happened on DEV.
+
+The results:
+✅ Claude Sonnet 5, GPT-5.5, Grok 4.20 (reasoning) and Gemini 3.7 Flash all scored 97–100%.
+⚠️ The cheaper models dropped to 67–81%. On "why did traffic change?" they scored just 20–49%.
+🔁 Same model, reasoning on vs. off: 100% vs. 35%.
+
+The hardest skill wasn't calling tools. It was knowing when nothing happened, and saying so.
+
+📊 Leaderboard: https://www.kaggle.com/benchmarks/nishikantaray/insighttrack-analyst-bench
+📝 Full write-up: [DEV link]
+
+#Kaggle #devchallenge #kagglechallenge #AI #LLM #BuildInPublic
+
+---
+
 ## X / Twitter (thread)
 
 **1/**
@@ -115,7 +142,8 @@ All in `post/social/`. Regenerate with `python scripts/make_social.py`.
 
 | Post | Image |
 |---|---|
-| LinkedIn (text above) | `carousel-linkedin.pdf`: upload as a **document** so it shows as a swipeable carousel. Or `landscape.png` for a single image |
+| LinkedIn explainer post | `explainer.png` |
+| LinkedIn (first post above) | `carousel-linkedin.pdf`: upload as a **document** so it shows as a swipeable carousel. Or `landscape.png` for a single image |
 | X / Twitter thread | Tweet 1: `landscape.png` · tweet 3: `carousel-03.png` · tweet 4: `carousel-04.png` · tweet 5: `carousel-05.png` · tweet 7: `carousel-06.png` |
 | X single post | `square.png` |
 | Instagram feed | `carousel-01.png` … `carousel-07.png` as one carousel post |

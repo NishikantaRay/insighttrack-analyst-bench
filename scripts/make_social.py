@@ -320,9 +320,79 @@ def story():
     c.save("story.png")
 
 
+def down_arrow(c, x, y, length=34, color=MUTED):
+    d, k = c.d, S
+    d.line([(x * k, y * k), (x * k, (y + length) * k)], fill=color, width=4 * k)
+    d.polygon([(x * k, (y + length + 12) * k), ((x - 11) * k, (y + length - 4) * k),
+               ((x + 11) * k, (y + length - 4) * k)], fill=color)
+
+
+def node(c, box, step, title, sub, accent):
+    x0, y0, x1, y1 = box
+    c.rect(box, PANEL, radius=24, outline=PANEL_EDGE, width=2)
+    c.rect((x0, y0, x0 + 10, y1), accent, radius=5)
+    c.rect((x0 + 34, y0 + 30, x0 + 94, y0 + 90), accent, radius=30)
+    c.text((x0 + 64, y0 + 60), step, f(HEAVY, 30), (8, 30, 30), anchor="mm")
+    c.text((x0 + 120, y0 + 24), title, f(HEAVY, 34), WHITE)
+    c.wrap((x0 + 120, y0 + 72), sub, f(MEDIUM, 24), MUTED, max_w=x1 - x0 - 150, line_h=32)
+
+
+def explainer():
+    """One-image explainer: InsightTrack -> benchmark -> Kaggle (8 models) -> DEV."""
+    c = Canvas(1080, 1350)
+    m = 70
+    x = m
+    for label, color in (("InsightTrack", TEAL), ("Kaggle", AMBER), ("DEV", WHITE)):
+        x = c.pill(x, 70, label, color=color, size=22)
+        if label != "DEV":
+            c.text((x - 2, 93), "x", f(BOLD, 24), FAINT, anchor="lm")
+            x += 26
+    c.text((1080 - m, 93), "Hackathon project", f(DEMI, 22), MUTED, anchor="rm")
+    c.wrap((m, 150), "How I tested 8 AI models on my product's real job", f(HEAVY, 52), WHITE, max_w=1080 - 2 * m, line_h=62)
+
+    w0, w1 = m, 1080 - m
+    NH, GAP = 148, 50  # node height; gap holding the arrow
+    y = 288
+    node(c, (w0, y, w1, y + NH), "1", "InsightTrack",
+         "My open-source analytics app. Its AI analyst, Pulse, explains why traffic changed.", TEAL)
+    down_arrow(c, 540, y + NH + 6, length=24)
+    y += NH + GAP
+    node(c, (w0, y, w1, y + NH), "2", "The benchmark",
+         "480 questions from Pulse's real job. Graded by the product's own code, not by AI.", TEAL)
+    down_arrow(c, 540, y + NH + 6, length=24)
+    y += NH + GAP
+
+    # Kaggle node: all 8 models with their overall score.
+    KH = 300
+    c.rect((w0, y, w1, y + KH), PANEL, radius=24, outline=PANEL_EDGE, width=2)
+    c.rect((w0, y, w0 + 10, y + KH), AMBER, radius=5)
+    c.rect((w0 + 34, y + 30, w0 + 94, y + 90), AMBER, radius=30)
+    c.text((w0 + 64, y + 60), "3", f(HEAVY, 30), (8, 30, 30), anchor="mm")
+    c.text((w0 + 120, y + 24), "Kaggle runs 8 models", f(HEAVY, 34), WHITE)
+    c.text((w0 + 120, y + 72), "Same 480 questions each. Overall score:", f(MEDIUM, 24), MUTED)
+    col_w = (w1 - w0 - 80) / 2
+    for i, (name, v) in enumerate(LEADERBOARD):
+        cx = w0 + 40 + (i % 2) * col_w
+        cy = y + 120 + (i // 2) * 42
+        color = TEAL if v >= 90 else ROSE
+        c.rect((cx, cy, cx + col_w - 16, cy + 34), TRACK, radius=10)
+        c.text((cx + 14, cy + 17), name, f(DEMI, 20), WHITE, anchor="lm")
+        c.text((cx + col_w - 30, cy + 17), f"{v:.1f}", f(HEAVY, 21), color, anchor="rm")
+    down_arrow(c, 540, y + KH + 6, length=24)
+    y += KH + GAP
+
+    node(c, (w0, y, w1, y + NH), "4", "The findings, on DEV",
+         "Top models: 100% at explaining traffic changes. Cheaper: 20-49%. Reasoning on vs. off: 100% vs. 35%.", ROSE)
+
+    c.text((m, 1222), "Knowing when nothing happened is the hard part.", f(BOLD, 28), AMBER)
+    c.text((m, 1282), "kaggle.com/benchmarks/nishikantaray/insighttrack-analyst-bench", f(MEDIUM, 20), FAINT)
+    c.text((1080 - m, 1282), "#kagglechallenge", f(BOLD, 22), TEAL, anchor="ra")
+    c.save("explainer.png")
+
+
 def main():
     for fn in (slide_hook, slide_setup, slide_split, slide_reasoning, slide_failures, slide_leaderboard,
-               slide_lessons, square, landscape, story):
+               slide_lessons, square, landscape, story, explainer):
         fn()
 
 
