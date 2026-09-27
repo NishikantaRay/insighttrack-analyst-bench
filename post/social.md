@@ -142,6 +142,7 @@ All in `post/social/`. Regenerate with `python scripts/make_social.py`.
 
 | Post | Image |
 |---|---|
+| LinkedIn explainer, square | `explainer-square.png` (1200×1200, light, logos) |
 | LinkedIn square post | `square-light.png` (1200×1200, light, logos) |
 | LinkedIn explainer post | `explainer-light.png` (light, real logos), or `explainer.png` (dark) |
 | LinkedIn (first post above) | `carousel-linkedin.pdf`: upload as a **document** so it shows as a swipeable carousel. Or `landscape.png` for a single image |

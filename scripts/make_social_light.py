@@ -294,8 +294,77 @@ def square_light(size=1200, name="square-light.png"):
     p.save(name)
 
 
+def right_arrow(p, x, y, color=INK3):
+    p.d.line([(x * S, y * S), ((x + 18) * S, y * S)], fill=color, width=3 * S)
+    p.d.polygon([((x + 26) * S, y * S), ((x + 16) * S, (y - 7) * S), ((x + 16) * S, (y + 7) * S)], fill=color)
+
+
+def explainer_square(size=1200, name="explainer-square.png"):
+    """The explainer as a LinkedIn square: flow row, 8 models, three findings."""
+    p = Page(size, size)
+    m = 64
+    logo_row(p, 52)
+    p.text((size / 2, 132), "HACKATHON PROJECT  ·  DEV × KAGGLE BENCHMARKING CHALLENGE", f(DEMI, 17), INK3, anchor="mm")
+    p.text((size / 2, 186), "How I tested 8 AI models", f(BOLD, 46), INK, anchor="mm")
+    p.text((size / 2, 242), "on my product's real job", f(BOLD, 46), INK, anchor="mm")
+
+    # Flow: 1 -> 2 -> 3 -> 4
+    flow = [(INDIGO, "InsightTrack", "Its AI analyst, Pulse, explains traffic changes"),
+            (INDIGO, "Benchmark", "480 questions, graded by the product's own code"),
+            (KAGGLE, "Kaggle", "Runs the same questions on 8 models"),
+            (DEVBLACK, "DEV", "Findings and lessons, in one write-up")]
+    arrow_gap = 40
+    cw = (size - 2 * m - 3 * arrow_gap) / 4
+    y0, ch = 300, 176
+    for i, (color, title, body) in enumerate(flow):
+        x0 = m + i * (cw + arrow_gap)
+        p.card((x0, y0, x0 + cw, y0 + ch), radius=18)
+        r = 17
+        p.d.ellipse([(x0 + 22) * S, (y0 + 22) * S, (x0 + 22 + 2 * r) * S, (y0 + 22 + 2 * r) * S], fill=color)
+        p.text((x0 + 22 + r, y0 + 22 + r), str(i + 1), f(BOLD, 18), (255, 255, 255), anchor="mm")
+        p.text((x0 + 70, y0 + 39), title, f(BOLD, 23), INK, anchor="lm")
+        p.wrap((x0 + 22, y0 + 80), body, f(MEDIUM, 18), INK2, max_w=cw - 44, line_h=25)
+        if i < 3:
+            right_arrow(p, x0 + cw + 7, y0 + ch / 2)
+
+    # Results: all 8 models.
+    ry = 510
+    p.card((m, ry, size - m, ry + 350), radius=20)
+    p.text((m + 32, ry + 26), "Kaggle results: overall accuracy, 8 models", f(BOLD, 24), INK)
+    col_gap = 40
+    col_w = (size - 2 * m - 64 - col_gap) / 2
+    for i, (model, v) in enumerate(LEADERBOARD):
+        cx = m + 32 + (i % 2) * (col_w + col_gap)
+        cy = ry + 84 + (i // 2) * 64
+        color = INDIGO if v >= 90 else AMBER
+        p.text((cx, cy), model, f(DEMI, 21), INK)
+        p.text((cx + col_w, cy), f"{v:.1f}", f(BOLD, 22), color, anchor="ra")
+        p.rect((cx, cy + 34, cx + col_w, cy + 42), TRACK, radius=4)
+        p.rect((cx, cy + 34, cx + col_w * v / 100, cy + 42), color, radius=4)
+
+    # Findings.
+    fy = 890
+    stats = [("100%", "top models on \"why did\ntraffic change?\"", INDIGO),
+             ("20–49%", "cheaper models\non the same", AMBER),
+             ("100 vs 35", "same model, reasoning\non vs. off", INK)]
+    gap = 24
+    sw = (size - 2 * m - 2 * gap) / 3
+    for i, (big, small, color) in enumerate(stats):
+        x0 = m + i * (sw + gap)
+        p.card((x0, fy, x0 + sw, fy + 164), radius=18)
+        p.text((x0 + 26, fy + 24), big, f(BOLD, 40), color)
+        for j, line in enumerate(small.split("\n")):
+            p.text((x0 + 26, fy + 86 + j * 26), line, f(MEDIUM, 20), INK2)
+
+    p.text((m, 1098), "The hard part wasn't calling tools. It was knowing when nothing happened.", f(DEMI, 21), INK)
+    p.text((m, 1146), "kaggle.com/benchmarks/nishikantaray/insighttrack-analyst-bench", f(MEDIUM, 18), INK3)
+    p.text((size - m, 1146), "#kagglechallenge", f(BOLD, 20), INDIGO, anchor="ra")
+    p.save(name)
+
+
 if __name__ == "__main__":
     explainer_light()
+    explainer_square()
     square_light()
     cover_light(1600, 672, "cover-light-dev.png")    # DEV crops covers to 1000:420
     cover_light(1600, 800, "cover-light.png")        # Kaggle benchmark / dataset (2:1)
