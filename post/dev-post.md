@@ -111,6 +111,7 @@ comparison answers a practical question:
 | Model | Tool choice | Data reading | Diagnosis | SQL | **Overall** | Cost (480 cases) |
 |---|---|---|---|---|---|---|
 | Claude Sonnet 5 | 100 | 100 | 100 | 100 | **100.0** | $2.08 |
+| GPT-5.5 | 100 | 100 | 96.7 | 100 | **99.2** | $3.23 |
 | Grok 4.20 (reasoning) | 100 | 96.7 | 100 | 95.0 | **97.9** | $1.21 |
 | Gemini 3.7 Flash | 100 | 100 | 100 | 90.8 | **97.7** | $1.07 |
 | Gemini 3.5 Flash-Lite | 98.3 | 88.3 | 49.2 | 88.3 | **81.0** | $0.20 |
@@ -118,16 +119,12 @@ comparison answers a practical question:
 | Grok 4.20 (no reasoning) | 98.3 | 82.5 | 35.0 | 92.5 | **77.1** | $0.40 |
 | GPT-5.4 nano | 93.3 | 61.7 | 20.0 | 93.3 | **67.1** | $0.07 |
 
-**GPT-5.5** scored 100 on tool choice, 100 on data reading and **90.8 on diagnosis**. Of the expensive
-models, it's the only one below 100% on diagnosis. It sits in its own line because Kaggle's daily model
-budget ran out before its SQL run.
-
 ### 1. Tool choice is solved. Diagnosis is where models split.
 
 Every model picked the right tool at least 93% of the time. So "can it call tools?" is no longer the
 interesting question for an analytics assistant. The real question is whether it understands what the
-numbers *mean*. On diagnosis, the top three models score 100%, and every cheaper model scores between
-20% and 49%.
+numbers *mean*. On diagnosis, the top three models score 100%, GPT-5.5 scores 96.7%, and every cheaper
+model scores between 20% and 49%.
 
 ![Diagnosis accuracy by model](diagnosis_accuracy.png)
 
@@ -198,12 +195,32 @@ one. In 8 of those 9 cases, the second query was right. Graded on its last query
 be 93.3% instead of 86.7%. That's a real cost of thinking out loud inside a tool call: whatever sits
 between your model and your database reads the first answer.
 
-### 7. Value: Gemini 3.7 Flash is the sweet spot
+### 7. GPT-5.5's only misses came from my prompt
+
+GPT-5.5 made exactly four mistakes on diagnosis, and all four are the same one. Each time, a page slid
+just past #10 (#10 to #11 twice, #10 to #12 once, #9 to #11 once): it fell off page one, so the
+answer is `page_one_exit`. GPT-5.5 said
+`unexplained_by_serp` every time.
+
+Rereading my prompt, I found two rules that clash:
+
+- `page_one_exit`: "position 1–10 before; now below 10".
+- "Moves of 1–2 places are normal jitter and are **never a cause**."
+
+I meant the jitter rule to cover `rank_drop` and `rank_gain`. GPT-5.5 took "never" literally. Claude
+Sonnet 5, Gemini 3.7 Flash and Grok with reasoning all read the intent. Neither reading is careless.
+One model follows the letter of an instruction and others follow its spirit, and that's worth knowing
+about any model you give rules to. It's also a reminder that **a benchmark's prompt is code too**.
+The next version will say "never counts as `rank_drop` or `rank_gain`", and I'm reporting the
+score as it stands rather than quietly fixing it.
+
+### 8. Value: Gemini 3.7 Flash is the sweet spot
 
 ![What you get for what you pay](score_vs_cost.png)
 
-Gemini 3.7 Flash reaches 97.7% at about half the cost of Claude Sonnet 5. Below the top three there's a
-cliff: no model under $0.65 per run scored above 81%, and all of them fell apart on diagnosis.
+Gemini 3.7 Flash reaches 97.7% at about half the cost of Claude Sonnet 5. GPT-5.5 was the most
+expensive run ($3.23) and still finished just behind Sonnet. Below the top four there's a cliff: no model
+under $0.65 per run scored above 81%, and all of them fell apart on diagnosis.
 
 ### So what will power Pulse?
 
@@ -211,7 +228,8 @@ cliff: no model under $0.65 per run scored above 81%, and all of them fell apart
 price of the most accurate model. Its one weakness is fixable in code: wrap `->>` comparisons in
 parentheses before running any generated SQL.
 
-**Claude Sonnet 5 as the fallback** for anything SQL-heavy, since it was perfect everywhere.
+**Claude Sonnet 5 as the fallback** for anything SQL-heavy, since it was perfect everywhere, and
+cheaper than GPT-5.5 for the same job.
 
 **No cheaper model for diagnosis.** An assistant that shrugs at a 47% drop costs more than it saves.
 
@@ -234,6 +252,7 @@ These lessons carry over to any assistant that works with numbers:
 ### What I'd measure next
 
 - **Consistency:** run each model three times and count how often the same case flips.
+- **The fixed jitter rule:** rerun every model and see whether GPT-5.5 reaches 100%, and whether any other model's score changes.
 - **Real tool calls:** multi-turn runs where the model actually calls InsightTrack's tools, instead of naming the one it would call.
 - **Messier evidence:** seasonality, like a holiday dip that isn't search, alongside keywords that point in different directions.
 
@@ -242,6 +261,7 @@ These lessons carry over to any assistant that works with numbers:
 - **"Correct" means correct by InsightTrack's rules.** Every rule and threshold is written into the prompt, so this tests careful application, not guessing a hidden convention.
 - **Synthetic data, one run per model**, all through Kaggle's model proxy.
 - **SQL is graded strictly on the first query.** That costs Haiku, as described above.
+- **One rule in the diagnosis prompt is ambiguous** (the jitter rule vs. `page_one_exit`). It accounts for all four of GPT-5.5's misses. Fixed wording is planned for the next version.
 
 ## My Benchmark
 

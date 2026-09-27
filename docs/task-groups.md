@@ -92,6 +92,11 @@ the README lists them. Run only one tier locally with `ITBENCH_DIFFICULTY=hard`.
 - Causes: `rank_drop`, `page_one_exit`, `ai_overview_displacement`, `ai_citation_lost`, `serp_feature_added` (drop only, on page one), `serp_feature_removed` / `rank_gain` / `ai_citation_gained` (spike only), and `unexplained_by_serp`.
 - A move of 1–2 places is never a cause.
 
+> **Known issue (task v4):** the prompt line "Moves of 1-2 places are normal jitter and are never a cause"
+> clashes with `page_one_exit` when a page moves from #10 to #11. GPT-5.5 read it literally and missed exactly
+> those cases (4 of 120). The fix for the next version: "never counts as rank_drop or rank_gain". Changing it means
+> a new task version and rerunning every model, because the leaderboard only shows the newest version.
+
 **Graded:**
 - **Not significant:** the model must say `significant: false`.
 - **Significant:** it must match significant, direction and the **exact** set of causes. Order doesn't matter.

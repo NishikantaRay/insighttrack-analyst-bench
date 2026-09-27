@@ -128,10 +128,10 @@ def chart_value(models):
     fig, ax = plt.subplots(figsize=(8, 5), facecolor=SURFACE)
     fig.subplots_adjust(left=0.10, right=0.96, top=0.82, bottom=0.13)
     offsets = {  # label placement, tuned by eye so nothing collides
-        "Claude Sonnet 5": (-8, 8, "right"), "Grok 4.20 (reasoning)": (8, 6, "left"),
-        "Gemini 3.7 Flash": (8, -14, "left"), "Gemini 3.5 Flash-Lite": (8, 4, "left"),
+        "Claude Sonnet 5": (-8, 8, "right"), "Grok 4.20 (reasoning)": (8, -14, "left"),
+        "Gemini 3.7 Flash": (-8, -14, "right"), "Gemini 3.5 Flash-Lite": (8, 4, "left"),
         "Claude Haiku 4.5": (8, 2, "left"), "Grok 4.20 (no reasoning)": (8, -12, "left"),
-        "GPT-5.4 nano": (8, 0, "left"), "GPT-5.5": (8, 0, "left"),
+        "GPT-5.4 nano": (8, 0, "left"), "GPT-5.5": (8, 10, "left"),
     }
     for name, v in models.items():
         overall = sum(v["acc"].values()) / 4
