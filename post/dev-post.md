@@ -1,10 +1,12 @@
 ---
-title: I gave 8 LLMs my analytics product's AI job. The cheap ones either invent a reason or shrug.
+title: "\"Nothing Happened,\" Said the AI. Traffic Was Down 47%."
 published: false
 tags: devchallenge, kagglechallenge, ai, machinelearning
 ---
 
 *This is a submission for the [Kaggle Benchmarking Challenge](https://dev.to/challenges/kaggle-2026-09-23)*
+
+**InsightTrack Analyst Bench: 8 LLMs, 480 questions from a real product's AI job, graded by the product's own code.**
 
 ## What I Benchmarked
 
