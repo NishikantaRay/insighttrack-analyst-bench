@@ -115,6 +115,16 @@ made-up numbers, tools that don't exist, noise called real (or the reverse).
 - **Data reading:** computed from the same data the model sees.
 - **Tool choice:** each question names the tool(s) that answer it; both are accepted when two are defensible.
 
+### Results
+Live leaderboard (8 models): https://www.kaggle.com/benchmarks/nishikantaray/insighttrack-analyst-bench
+Top four: Claude Sonnet 5 100.0 · GPT-5.5 99.2 · Grok 4.20 (reasoning) 97.9 · Gemini 3.7 Flash 97.7.
+Every cheaper model scored 20–49% on diagnosis.
+
+### Known issue
+In the diagnosis prompt, "moves of 1-2 places are normal jitter and are never a cause" clashes with
+`page_one_exit` when a page moves from #10 to #11. GPT-5.5 read it literally, and this accounts for all
+4 of its diagnosis misses. The next version will say "never counts as rank_drop or rank_gain".
+
 ### Notes
 - All data is **synthetic**; no real site's visitors are included.
 - Everything is seeded and rebuilds byte-for-byte.
