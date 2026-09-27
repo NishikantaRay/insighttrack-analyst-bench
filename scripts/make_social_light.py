@@ -268,7 +268,34 @@ def cover_light(w, h, name):
     p.save(name)
 
 
+def square_light(size=1200, name="square-light.png"):
+    """LinkedIn square (1200x1200): logos, title, drop chart, three results."""
+    p = Page(size, size)
+    m = 72
+    small_logo_row(p, m, 64, h=40)
+    p.text((m, 150), "KAGGLE BENCHMARK", f(BOLD, 22), INDIGO)
+    for i, line in enumerate(["My Kaggle Benchmark Caught", "AI Models Inventing Reasons"]):
+        p.text((m, 188 + i * 70), line, f(BOLD, 60), INK)
+    p.text((m, 342), "8 LLMs · 480 questions · graded by the product's own code", f(MEDIUM, 25), INK2)
+    drop_chart(p, (m, 410, size - m, 850))
+    # Three results as equal cards.
+    gap = 24
+    cw = (size - 2 * m - 2 * gap) / 3
+    stats = [("100%", "top models", INDIGO), ("20–49%", "cheaper models", AMBER), ("35%", "same model,\nreasoning off", INK)]
+    for i, (big, small, color) in enumerate(stats):
+        x0 = m + i * (cw + gap)
+        p.card((x0, 884, x0 + cw, 1044), radius=18)
+        p.text((x0 + 28, 910), big, f(BOLD, 44), color)
+        for j, line in enumerate(small.split("\n")):
+            p.text((x0 + 28, 972 + j * 26), line, f(MEDIUM, 21), INK2)
+    p.text((m, 1080), "Accuracy on \"why did this page's traffic change?\"", f(MEDIUM, 20), INK3)
+    p.text((m, 1128), "kaggle.com/benchmarks/nishikantaray/insighttrack-analyst-bench", f(MEDIUM, 19), INK3)
+    p.text((size - m, 1128), "#kagglechallenge", f(BOLD, 21), INDIGO, anchor="ra")
+    p.save(name)
+
+
 if __name__ == "__main__":
     explainer_light()
+    square_light()
     cover_light(1600, 672, "cover-light-dev.png")    # DEV crops covers to 1000:420
     cover_light(1600, 800, "cover-light.png")        # Kaggle benchmark / dataset (2:1)
